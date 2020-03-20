@@ -10,9 +10,7 @@ GAME RULES:
 */
 
 let scores, roundScore, activePlayer
-scores = [0,0]
-roundScore = 0
-activePlayer = 0
+
 
 //Setter
 //document.querySelector('#current-' + activePlayer ).textContent = dice
@@ -21,16 +19,7 @@ activePlayer = 0
 //Getter
 // var x = document.querySelector('#score-0').textContent;
 
-function setZero() {
-
-    document.querySelector('.dice').style.display = 'none'
-    document.getElementById('score-0').textContent = 0
-    document.getElementById('score-1').textContent = 0
-    document.getElementById('current-0').textContent = 0
-    document.getElementById('current-1').textContent = 0
-
-}
-setZero()
+init()
 
 // function btn() {
 //     //Something here
@@ -68,20 +57,47 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 
     //2. Update the UI interface
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer]
-    nextPlayer()
-
+  
     //3. Check if the player won the game
     if(scores[activePlayer] >= 20) {
         document.querySelector('#name-' + activePlayer).textContent = 'Winner'
-        document.querySelector('#name-' + activePlayer).style.color = 'red' 
-    } else {
-        nextPlayer()
-    }
+        document.querySelector('.dice').style.display = 'none' 
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner')
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active')
+
+    } 
+    else {
+    //Next player
+    nextPlayer()
+    }        
 })
 
 
+document.querySelector('.btn-new').addEventListener('click', init)
+
+
+function init() {
+    scores = [0,0]
+    roundScore = 0
+    activePlayer = 0
+    document.querySelector('.dice').style.display = 'none'
+    document.getElementById('score-0').textContent = '0'
+    document.getElementById('score-1').textContent = '0'
+    document.getElementById('current-0').textContent = '0'
+    document.getElementById('current-1').textContent = '0'
+    document.getElementById('name-0').textContent = 'Player 1'
+    document.getElementById('name-1').textContent = 'Player 2'
+    document.querySelector('.player-0-panel').classList.remove('winner')
+    document.querySelector('.player-1-panel').classList.remove('winner')
+    document.querySelector('.player-0-panel').classList.remove('active')
+    document.querySelector('.player-1-panel').classList.remove('active')
+    document.querySelector('.player-0-panel').classList.add('active')
+
+}
+
+
 function nextPlayer() {
-    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0
+    (activePlayer === 0) ? activePlayer = 1 : activePlayer = 0
     roundScore = 0
 
     document.getElementById('current-0').textContent = '0'
